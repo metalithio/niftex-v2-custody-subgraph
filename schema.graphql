@@ -1,5 +1,6 @@
 type ShardedWallet @entity {
   id: ID!
+	symbol: String!
 }
 
 type Nft @entity {

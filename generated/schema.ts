@@ -41,6 +41,15 @@ export class ShardedWallet extends Entity {
   set id(value: string) {
     this.set("id", Value.fromString(value));
   }
+
+  get symbol(): string {
+    let value = this.get("symbol");
+    return value.toString();
+  }
+
+  set symbol(value: string) {
+    this.set("symbol", Value.fromString(value));
+  }
 }
 
 export class Nft extends Entity {

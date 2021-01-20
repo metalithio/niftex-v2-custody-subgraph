@@ -1,4 +1,6 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import {
+	// BigInt
+} from "@graphprotocol/graph-ts"
 import {
   CryptoPunks,
   // Assign,
@@ -9,18 +11,19 @@ import {
   // PunkBidWithdrawn,
   // PunkBought,
   // PunkNoLongerForSale
-} from "../generated/CryptoPunks/CryptoPunks"
+} from "../../generated/CryptoPunks/CryptoPunks"
 import {
 	ShardedWallet,
 	Nft
-} from "../generated/schema"
+} from "../../generated/schema"
 
 export function handlePunkTransfer(event: PunkTransfer): void {
-	let entity = ShardedWallet.load(event.params.to.toHex())
+	let swEntity = ShardedWallet.load(event.params.to.toHex())
 
-	if (entity !== null) {
+	if (swEntity !== null) {
 		let id = `${event.address}_${event.params.punkIndex}`
-		entity = new Nft(id.toHex())
+		let entity = new Nft(id)
+		entity.save()
 	}
 
 }
