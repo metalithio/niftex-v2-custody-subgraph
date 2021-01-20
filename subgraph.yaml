@@ -4,11 +4,12 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: ShardedWalletFactory
-    network: mainnet
+    network: rinkeby
     source:
-      address: '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB'
+      # rinkeby factory deployed by joel 20 Jan 2021
+      address: '0x33DE11bBb8Cad9B47362A1213487A3DFeCd7D78E'
       abi: ShardedWalletFactory
-      startBlock: 11688395
+      startBlock: 7927147
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -24,11 +25,13 @@ dataSources:
           handler: handleNewInstance
   - kind: ethereum/contract
     name: CryptoPunks
-    network: mainnet
+    network: rinkeby
     source:
-      address: "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"
+      # punk rinkeby deployed by ourselves for niftex v1
+      address: "0xee321008dd7f9267cd5ea611da40d2d83e5fa15f"
+      #address: "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"
       abi: CryptoPunks
-      startBlock: 11688395
+      startBlock: 7927147
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -66,7 +69,7 @@ dataSources:
 templates:
   - name: ShardedWallet
     kind: ethereum/contract
-    network: mainnet
+    network: rinkeby
     source:
       abi: ShardedWallet
     mapping:
