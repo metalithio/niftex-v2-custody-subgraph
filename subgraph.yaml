@@ -1,44 +1,90 @@
-specVersion: 0.0.1
+specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
+  - kind: ethereum/contract
+    name: ShardedWalletFactory
+    network: mainnet
+    source:
+      address: '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB'
+      abi: ShardedWalletFactory
+      startBlock: 11688395
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/shardedWalletFactory.ts
+      entities:
+        - ShardedWalletFactory
+      abis:
+        - name: ShardedWalletFactory
+          file: ./abis/ShardedWalletFactory.json
+      eventHandlers:
+        - event: NewInstance(address)
+          handler: handleNewInstance
   - kind: ethereum/contract
     name: CryptoPunks
     network: mainnet
     source:
       address: "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"
       abi: CryptoPunks
+      startBlock: 11688395
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.2
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Assign
-        - Transfer
+        # - Assign
+        # - Transfer
         - PunkTransfer
-        - PunkOffered
-        - PunkBidEntered
-        - PunkBidWithdrawn
-        - PunkBought
-        - PunkNoLongerForSale
+        # - PunkOffered
+        # - PunkBidEntered
+        # - PunkBidWithdrawn
+        # - PunkBought
+        # - PunkNoLongerForSale
       abis:
         - name: CryptoPunks
           file: ./abis/CryptoPunks.json
       eventHandlers:
-        - event: Assign(indexed address,uint256)
-          handler: handleAssign
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
+        # - event: Assign(indexed address,uint256)
+        #   handler: handleAssign
+        # - event: Transfer(indexed address,indexed address,uint256)
+        #   handler: handleTransfer
         - event: PunkTransfer(indexed address,indexed address,uint256)
           handler: handlePunkTransfer
-        - event: PunkOffered(indexed uint256,uint256,indexed address)
-          handler: handlePunkOffered
-        - event: PunkBidEntered(indexed uint256,uint256,indexed address)
-          handler: handlePunkBidEntered
-        - event: PunkBidWithdrawn(indexed uint256,uint256,indexed address)
-          handler: handlePunkBidWithdrawn
-        - event: PunkBought(indexed uint256,uint256,indexed address,indexed address)
-          handler: handlePunkBought
-        - event: PunkNoLongerForSale(indexed uint256)
-          handler: handlePunkNoLongerForSale
-      file: ./src/mapping.ts
+        # - event: PunkOffered(indexed uint256,uint256,indexed address)
+        #   handler: handlePunkOffered
+        # - event: PunkBidEntered(indexed uint256,uint256,indexed address)
+        #   handler: handlePunkBidEntered
+        # - event: PunkBidWithdrawn(indexed uint256,uint256,indexed address)
+        #   handler: handlePunkBidWithdrawn
+        # - event: PunkBought(indexed uint256,uint256,indexed address,indexed address)
+        #   handler: handlePunkBought
+        # - event: PunkNoLongerForSale(indexed uint256)
+        #   handler: handlePunkNoLongerForSale
+      file: ./src/mappings/cryptoPunks.ts
+templates:
+  - name: ShardedWallet
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: ShardedWallet
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/mappings/shardedWallet.ts
+      entities:
+        - ShardedWallet
+      abis:
+        - name: ShardedWallet
+          file: ./abis/ShardedWallet.json
+      # eventHandlers:
+      #   - event: TokenPurchase(address,uint256,uint256)
+      #     handler: handleTokenPurchase
+      #   - event: EthPurchase(address,uint256,uint256)
+      #     handler: handleEthPurchase
+      #   - event: AddLiquidity(address,uint256,uint256)
+      #     handler: handleAddLiquidity
+      #   - event: RemoveLiquidity(address,uint256,uint256)
+      #     handler: handleRemoveLiquidity

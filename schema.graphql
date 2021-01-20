@@ -1,6 +1,7 @@
-type ExampleEntity @entity {
+type ShardedWallet @entity {
   id: ID!
-  count: BigInt!
-  to: Bytes! # address
-  punkIndex: BigInt! # uint256
+}
+
+type Nft @entity {
+	id: ID!
 }
