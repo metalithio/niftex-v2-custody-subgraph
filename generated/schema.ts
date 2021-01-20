@@ -12,7 +12,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class ShardedWallet extends Entity {
+export class Wallet extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -20,17 +20,17 @@ export class ShardedWallet extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save ShardedWallet entity without an ID");
+    assert(id !== null, "Cannot save Wallet entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save ShardedWallet entity with non-string ID. " +
+      "Cannot save Wallet entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("ShardedWallet", id.toString(), this);
+    store.set("Wallet", id.toString(), this);
   }
 
-  static load(id: string): ShardedWallet | null {
-    return store.get("ShardedWallet", id) as ShardedWallet | null;
+  static load(id: string): Wallet | null {
+    return store.get("Wallet", id) as Wallet | null;
   }
 
   get id(): string {
@@ -49,6 +49,15 @@ export class ShardedWallet extends Entity {
 
   set symbol(value: string) {
     this.set("symbol", Value.fromString(value));
+  }
+
+  get nfts(): Array<string> {
+    let value = this.get("nfts");
+    return value.toStringArray();
+  }
+
+  set nfts(value: Array<string>) {
+    this.set("nfts", Value.fromStringArray(value));
   }
 }
 
@@ -80,5 +89,32 @@ export class Nft extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get wallet(): string {
+    let value = this.get("wallet");
+    return value.toString();
+  }
+
+  set wallet(value: string) {
+    this.set("wallet", Value.fromString(value));
+  }
+
+  get registry(): string {
+    let value = this.get("registry");
+    return value.toString();
+  }
+
+  set registry(value: string) {
+    this.set("registry", Value.fromString(value));
+  }
+
+  get tokenId(): BigInt {
+    let value = this.get("tokenId");
+    return value.toBigInt();
+  }
+
+  set tokenId(value: BigInt) {
+    this.set("tokenId", Value.fromBigInt(value));
   }
 }

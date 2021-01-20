@@ -1,8 +1,12 @@
-type ShardedWallet @entity {
+type Wallet @entity {
   id: ID!
 	symbol: String!
+	nfts: [Nft!]! @derivedFrom(field: "wallet")
 }
 
 type Nft @entity {
 	id: ID!
+	wallet: Wallet!
+	registry: String!
+	tokenId: BigInt!
 }

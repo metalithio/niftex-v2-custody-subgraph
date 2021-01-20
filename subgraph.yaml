@@ -16,13 +16,34 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/mappings/shardedWalletFactory.ts
       entities:
-        - ShardedWalletFactory
+        - NewInstance
       abis:
         - name: ShardedWalletFactory
           file: ./abis/ShardedWalletFactory.json
+        - name: ShardedWallet
+          file: ./abis/ShardedWallet.json
       eventHandlers:
         - event: NewInstance(address)
           handler: handleNewInstance
+  # - kind: ethereum/contract
+  #   name: ShardedWallet
+  #   network: rinkeby
+  #   source:
+  #     abi: ShardedWallet
+  #     startBlock: 7927147
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     file: ./src/mappings/shardedWallet.ts
+  #     entities:
+  #       - Received
+  #     abis:
+  #       - name: ShardedWallet
+  #         file: ./abis/ShardedWallet.json
+  #     eventHandlers:
+  #       - event: Received(indexed address,uint256,bytes)
+  #         handler: handlesReceived
   - kind: ethereum/contract
     name: CryptoPunks
     network: rinkeby
@@ -66,22 +87,6 @@ dataSources:
         # - event: PunkNoLongerForSale(indexed uint256)
         #   handler: handlePunkNoLongerForSale
       file: ./src/mappings/cryptoPunks.ts
-templates:
-  - name: ShardedWallet
-    kind: ethereum/contract
-    network: rinkeby
-    source:
-      abi: ShardedWallet
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      file: ./src/mappings/shardedWallet.ts
-      entities:
-        - ShardedWallet
-      abis:
-        - name: ShardedWallet
-          file: ./abis/ShardedWallet.json
       # eventHandlers:
       #   - event: TokenPurchase(address,uint256,uint256)
       #     handler: handleTokenPurchase

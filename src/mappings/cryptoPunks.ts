@@ -13,16 +13,19 @@ import {
   // PunkNoLongerForSale
 } from "../../generated/CryptoPunks/CryptoPunks"
 import {
-	ShardedWallet,
+	Wallet,
 	Nft
 } from "../../generated/schema"
 
 export function handlePunkTransfer(event: PunkTransfer): void {
-	let swEntity = ShardedWallet.load(event.params.to.toHex())
+	let wallet = Wallet.load(event.params.to.toHex())
 
-	if (swEntity !== null) {
-		let id = `${event.address}_${event.params.punkIndex}`
+	if (wallet !== null) {
+		let id = event.address.toHexString() + '_' + event.params.punkIndex.toString()
 		let entity = new Nft(id)
+		entity.wallet = wallet.id
+		entity.registry = event.address.toHexString()
+		entity.tokenId = event.params.punkIndex
 		entity.save()
 	}
 

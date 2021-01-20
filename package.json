@@ -1,13 +1,13 @@
 {
-  "name": "NIFTEX_CUSTODY",
+  "name": "niftex-v2-custody",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ jmahhh/NIFTEX_CUSTODY",
-    "create-local": "graph create --node http://localhost:8020/ jmahhh/NIFTEX_CUSTODY",
-    "remove-local": "graph remove --node http://localhost:8020/ jmahhh/NIFTEX_CUSTODY",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 jmahhh/NIFTEX_CUSTODY"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ jmahhh/niftex-v2-custody",
+    "create-local": "graph create --node http://localhost:8020/ jmahhh/niftex-v2-custody",
+    "remove-local": "graph remove --node http://localhost:8020/ jmahhh/niftex-v2-custody",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 jmahhh/niftex-v2-custody"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.19.0",

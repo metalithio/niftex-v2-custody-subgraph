@@ -1,15 +1,28 @@
-// export function handlePunkTransfer(event: PunkTransfer): void {}
+// import {
+// 	Address,
+// 	log
+// } from "@graphprotocol/graph-ts"
+// import {
+// 	Received,
+// } from "../../generated/ShardedWallet/ShardedWallet"
+// import {
+// 	Received as ReceivedTemplate,
+// } from "../../generated/schema"
+// import {
+// 	ShardedWallet
+// } from "../../generated/ShardedWallet/ShardedWallet"
 //
-// export function handleAssign(event: Assign): void {}
+// export function handleReceived(event: Received): void {
+// 	let entity = ReceivedTemplate.load(event.params.data.toString())
 //
-// export function handleTransfer(event: Transfer): void {}
+// 	if (entity == null) {
+// 		let entity = new ReceivedTemplate(event.params.data.toString())
+// 		entity.save()
+// 	}
 //
-// export function handlePunkOffered(event: PunkOffered): void {}
+// 	let shardedWallet = ShardedWallet.bind(event.address as Address)
 //
-// export function handlePunkBidEntered(event: PunkBidEntered): void {}
+// 	let result = shardedWallet.try_symbol()
+// 		log.warning("try_symbol: {}", [result.value])
 //
-// export function handlePunkBidWithdrawn(event: PunkBidWithdrawn): void {}
-//
-// export function handlePunkBought(event: PunkBought): void {}
-//
-// export function handlePunkNoLongerForSale(event: PunkNoLongerForSale): void {}
+// }
