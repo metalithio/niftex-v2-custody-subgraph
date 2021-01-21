@@ -177,4 +177,21 @@ export class Nft extends Entity {
       this.set("uri", Value.fromString(value as string));
     }
   }
+
+  get value(): BigInt | null {
+    let value = this.get("value");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set value(value: BigInt | null) {
+    if (value === null) {
+      this.unset("value");
+    } else {
+      this.set("value", Value.fromBigInt(value as BigInt));
+    }
+  }
 }

@@ -10,7 +10,10 @@ type Nft @entity {
 	registry: String!
 	tokenId: BigInt!
 	txnHash: Bytes!
+	"Metadata"
 	name: String
 	symbol: String
 	uri: String
+	"Only used for ERC1155"
+	value: BigInt
 }
