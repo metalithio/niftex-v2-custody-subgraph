@@ -2,15 +2,7 @@ import {
 	// BigInt
 } from "@graphprotocol/graph-ts"
 import {
-  CryptoPunks,
-  // Assign,
-  // Transfer,
   PunkTransfer,
-  // PunkOffered,
-  // PunkBidEntered,
-  // PunkBidWithdrawn,
-  // PunkBought,
-  // PunkNoLongerForSale
 } from "../../generated/CryptoPunks/CryptoPunks"
 import {
 	Wallet,
@@ -26,21 +18,7 @@ export function handlePunkTransfer(event: PunkTransfer): void {
 		entity.wallet = wallet.id
 		entity.registry = event.address.toHexString()
 		entity.tokenId = event.params.punkIndex
+		entity.txnHash = event.transaction.hash
 		entity.save()
 	}
-
 }
-
-// export function handleAssign(event: Assign): void {}
-//
-// export function handleTransfer(event: Transfer): void {}
-//
-// export function handlePunkOffered(event: PunkOffered): void {}
-//
-// export function handlePunkBidEntered(event: PunkBidEntered): void {}
-//
-// export function handlePunkBidWithdrawn(event: PunkBidWithdrawn): void {}
-//
-// export function handlePunkBought(event: PunkBought): void {}
-//
-// export function handlePunkNoLongerForSale(event: PunkNoLongerForSale): void {}

@@ -11,7 +11,7 @@ import {
 } from "../../generated/schema"
 import {
 	ShardedWallet
-} from "../../generated/ShardedWallet/ShardedWallet"
+} from "../../generated/ShardedWalletFactory/ShardedWallet"
 
 export function handleNewInstance(event: NewInstance): void {
 	let entity = new Wallet(event.params.instance.toHex())

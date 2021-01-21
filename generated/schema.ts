@@ -117,4 +117,13 @@ export class Nft extends Entity {
   set tokenId(value: BigInt) {
     this.set("tokenId", Value.fromBigInt(value));
   }
+
+  get txnHash(): Bytes {
+    let value = this.get("txnHash");
+    return value.toBytes();
+  }
+
+  set txnHash(value: Bytes) {
+    this.set("txnHash", Value.fromBytes(value));
+  }
 }

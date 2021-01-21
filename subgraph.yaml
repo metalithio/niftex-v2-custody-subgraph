@@ -6,7 +6,7 @@ dataSources:
     name: ShardedWalletFactory
     network: rinkeby
     source:
-      # rinkeby factory deployed by joel 20 Jan 2021
+      # !WARNING rinkeby factory deployed by joel 20 Jan 2021
       address: '0x33DE11bBb8Cad9B47362A1213487A3DFeCd7D78E'
       abi: ShardedWalletFactory
       startBlock: 7927147
@@ -25,32 +25,13 @@ dataSources:
       eventHandlers:
         - event: NewInstance(address)
           handler: handleNewInstance
-  # - kind: ethereum/contract
-  #   name: ShardedWallet
-  #   network: rinkeby
-  #   source:
-  #     abi: ShardedWallet
-  #     startBlock: 7927147
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.4
-  #     language: wasm/assemblyscript
-  #     file: ./src/mappings/shardedWallet.ts
-  #     entities:
-  #       - Received
-  #     abis:
-  #       - name: ShardedWallet
-  #         file: ./abis/ShardedWallet.json
-  #     eventHandlers:
-  #       - event: Received(indexed address,uint256,bytes)
-  #         handler: handlesReceived
+  # NFT REGISTRIES
   - kind: ethereum/contract
     name: CryptoPunks
     network: rinkeby
     source:
-      # punk rinkeby deployed by ourselves for niftex v1
+      # !WARNING punk rinkeby deployed by ourselves for niftex v1
       address: "0xee321008dd7f9267cd5ea611da40d2d83e5fa15f"
-      #address: "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"
       abi: CryptoPunks
       startBlock: 7927147
     mapping:
@@ -58,41 +39,38 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        # - Assign
-        # - Transfer
         - PunkTransfer
-        # - PunkOffered
-        # - PunkBidEntered
-        # - PunkBidWithdrawn
-        # - PunkBought
-        # - PunkNoLongerForSale
       abis:
         - name: CryptoPunks
           file: ./abis/CryptoPunks.json
       eventHandlers:
-        # - event: Assign(indexed address,uint256)
-        #   handler: handleAssign
-        # - event: Transfer(indexed address,indexed address,uint256)
-        #   handler: handleTransfer
         - event: PunkTransfer(indexed address,indexed address,uint256)
           handler: handlePunkTransfer
-        # - event: PunkOffered(indexed uint256,uint256,indexed address)
-        #   handler: handlePunkOffered
-        # - event: PunkBidEntered(indexed uint256,uint256,indexed address)
-        #   handler: handlePunkBidEntered
-        # - event: PunkBidWithdrawn(indexed uint256,uint256,indexed address)
-        #   handler: handlePunkBidWithdrawn
-        # - event: PunkBought(indexed uint256,uint256,indexed address,indexed address)
-        #   handler: handlePunkBought
-        # - event: PunkNoLongerForSale(indexed uint256)
-        #   handler: handlePunkNoLongerForSale
       file: ./src/mappings/cryptoPunks.ts
-      # eventHandlers:
-      #   - event: TokenPurchase(address,uint256,uint256)
-      #     handler: handleTokenPurchase
-      #   - event: EthPurchase(address,uint256,uint256)
-      #     handler: handleEthPurchase
-      #   - event: AddLiquidity(address,uint256,uint256)
-      #     handler: handleAddLiquidity
-      #   - event: RemoveLiquidity(address,uint256,uint256)
-      #     handler: handleRemoveLiquidity
+  - kind: ethereum/contract
+    name: GenericTransfers
+    network: rinkeby
+    source:
+      abi: TransferPermutations
+      startBlock: 7927147
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: TransferPermutations
+          file: ./abis/TransferPermutations.json
+      eventHandlers:
+        # "indexed" count AND location matters
+        - event: Transfer(address,address,uint256)
+          handler: handleTransfer
+        - event: Transfer(address,address,indexed uint256)
+          handler: handleTransfer
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+
+      file: ./src/mappings/genericTransfers.ts

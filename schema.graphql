@@ -9,4 +9,5 @@ type Nft @entity {
 	wallet: Wallet!
 	registry: String!
 	tokenId: BigInt!
+	txnHash: Bytes!
 }
