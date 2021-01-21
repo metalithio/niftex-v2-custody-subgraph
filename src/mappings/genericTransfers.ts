@@ -6,6 +6,9 @@ import {
   Transfer,
 } from "../../generated/GenericTransfers/TransferPermutations"
 import {
+	ERC721Metadata
+} from "../../generated/GenericTransfers/ERC721Metadata"
+import {
 	Wallet,
 	Nft
 } from "../../generated/schema"
@@ -25,6 +28,22 @@ export function handleTransfer(event: Transfer): void {
 		entity.registry = event.address.toHexString()
 		entity.tokenId = event.params.tokenId
 		entity.txnHash = event.transaction.hash
+
+		let registry = ERC721Metadata.bind(event.address as Address)
+
+		let nameResult = registry.try_name()
+		if (!nameResult.reverted) {
+			entity.name = nameResult.value
+		}
+		let symbolResult = registry.try_symbol()
+		if (!symbolResult.reverted) {
+			entity.symbol = symbolResult.value
+		}
+		let tokenURIResult = registry.try_tokenURI(event.params.tokenId)
+		if (!tokenURIResult.reverted) {
+			entity.uri = tokenURIResult.value
+		}
+		
 		entity.save()
 	}
 }

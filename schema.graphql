@@ -10,4 +10,7 @@ type Nft @entity {
 	registry: String!
 	tokenId: BigInt!
 	txnHash: Bytes!
+	name: String
+	symbol: String
+	uri: String
 }

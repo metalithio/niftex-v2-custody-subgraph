@@ -62,6 +62,8 @@ dataSources:
       abis:
         - name: TransferPermutations
           file: ./abis/TransferPermutations.json
+        - name: ERC721Metadata
+          file: ./abis/ERC721Metadata.json
       eventHandlers:
         # "indexed" count AND location matters
         - event: Transfer(address,address,uint256)

@@ -19,6 +19,8 @@ export function handlePunkTransfer(event: PunkTransfer): void {
 		entity.registry = event.address.toHexString()
 		entity.tokenId = event.params.punkIndex
 		entity.txnHash = event.transaction.hash
+		entity.name = "CRYPTOPUNKS"
+		entity.symbol = "Ͼ"
 		entity.save()
 	}
 }
