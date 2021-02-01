@@ -51,6 +51,42 @@ export class Wallet extends Entity {
     this.set("symbol", Value.fromString(value));
   }
 
+  get name(): string {
+    let value = this.get("name");
+    return value.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+
+  get owner(): string {
+    let value = this.get("owner");
+    return value.toString();
+  }
+
+  set owner(value: string) {
+    this.set("owner", Value.fromString(value));
+  }
+
+  get governance(): string {
+    let value = this.get("governance");
+    return value.toString();
+  }
+
+  set governance(value: string) {
+    this.set("governance", Value.fromString(value));
+  }
+
+  get artistWallet(): string {
+    let value = this.get("artistWallet");
+    return value.toString();
+  }
+
+  set artistWallet(value: string) {
+    this.set("artistWallet", Value.fromString(value));
+  }
+
   get nfts(): Array<string> {
     let value = this.get("nfts");
     return value.toStringArray();

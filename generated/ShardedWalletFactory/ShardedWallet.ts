@@ -215,6 +215,21 @@ export class ShardedWallet extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
+  artistWallet(): Address {
+    let result = super.call("artistWallet", "artistWallet():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_artistWallet(): ethereum.CallResult<Address> {
+    let result = super.tryCall("artistWallet", "artistWallet():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   balanceOf(account: Address): BigInt {
     let result = super.call("balanceOf", "balanceOf(address):(uint256)", [
       ethereum.Value.fromAddress(account)
@@ -446,41 +461,6 @@ export class ShardedWallet extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
-
-  moduleExecuteReturn(to: Address, value: BigInt, data: Bytes): Bytes {
-    let result = super.call(
-      "moduleExecuteReturn",
-      "moduleExecuteReturn(address,uint256,bytes):(bytes)",
-      [
-        ethereum.Value.fromAddress(to),
-        ethereum.Value.fromUnsignedBigInt(value),
-        ethereum.Value.fromBytes(data)
-      ]
-    );
-
-    return result[0].toBytes();
-  }
-
-  try_moduleExecuteReturn(
-    to: Address,
-    value: BigInt,
-    data: Bytes
-  ): ethereum.CallResult<Bytes> {
-    let result = super.tryCall(
-      "moduleExecuteReturn",
-      "moduleExecuteReturn(address,uint256,bytes):(bytes)",
-      [
-        ethereum.Value.fromAddress(to),
-        ethereum.Value.fromUnsignedBigInt(value),
-        ethereum.Value.fromBytes(data)
-      ]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBytes());
-  }
 }
 
 export class ConstructorCall extends ethereum.Call {
@@ -611,6 +591,44 @@ export class DecreaseAllowanceCall__Outputs {
   }
 }
 
+export class ExecuteCall extends ethereum.Call {
+  get inputs(): ExecuteCall__Inputs {
+    return new ExecuteCall__Inputs(this);
+  }
+
+  get outputs(): ExecuteCall__Outputs {
+    return new ExecuteCall__Outputs(this);
+  }
+}
+
+export class ExecuteCall__Inputs {
+  _call: ExecuteCall;
+
+  constructor(call: ExecuteCall) {
+    this._call = call;
+  }
+
+  get to(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get value(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get data(): Bytes {
+    return this._call.inputValues[2].value.toBytes();
+  }
+}
+
+export class ExecuteCall__Outputs {
+  _call: ExecuteCall;
+
+  constructor(call: ExecuteCall) {
+    this._call = call;
+  }
+}
+
 export class IncreaseAllowanceCall extends ethereum.Call {
   get inputs(): IncreaseAllowanceCall__Inputs {
     return new IncreaseAllowanceCall__Inputs(this);
@@ -649,6 +667,226 @@ export class IncreaseAllowanceCall__Outputs {
   }
 }
 
+export class InitializeCall extends ethereum.Call {
+  get inputs(): InitializeCall__Inputs {
+    return new InitializeCall__Inputs(this);
+  }
+
+  get outputs(): InitializeCall__Outputs {
+    return new InitializeCall__Outputs(this);
+  }
+}
+
+export class InitializeCall__Inputs {
+  _call: InitializeCall;
+
+  constructor(call: InitializeCall) {
+    this._call = call;
+  }
+
+  get governance_(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get minter_(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get name_(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get symbol_(): string {
+    return this._call.inputValues[3].value.toString();
+  }
+
+  get artistWallet_(): Address {
+    return this._call.inputValues[4].value.toAddress();
+  }
+}
+
+export class InitializeCall__Outputs {
+  _call: InitializeCall;
+
+  constructor(call: InitializeCall) {
+    this._call = call;
+  }
+}
+
+export class ModuleBurnCall extends ethereum.Call {
+  get inputs(): ModuleBurnCall__Inputs {
+    return new ModuleBurnCall__Inputs(this);
+  }
+
+  get outputs(): ModuleBurnCall__Outputs {
+    return new ModuleBurnCall__Outputs(this);
+  }
+}
+
+export class ModuleBurnCall__Inputs {
+  _call: ModuleBurnCall;
+
+  constructor(call: ModuleBurnCall) {
+    this._call = call;
+  }
+
+  get from(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get value(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class ModuleBurnCall__Outputs {
+  _call: ModuleBurnCall;
+
+  constructor(call: ModuleBurnCall) {
+    this._call = call;
+  }
+}
+
+export class ModuleExecuteCall extends ethereum.Call {
+  get inputs(): ModuleExecuteCall__Inputs {
+    return new ModuleExecuteCall__Inputs(this);
+  }
+
+  get outputs(): ModuleExecuteCall__Outputs {
+    return new ModuleExecuteCall__Outputs(this);
+  }
+}
+
+export class ModuleExecuteCall__Inputs {
+  _call: ModuleExecuteCall;
+
+  constructor(call: ModuleExecuteCall) {
+    this._call = call;
+  }
+
+  get to(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get value(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get data(): Bytes {
+    return this._call.inputValues[2].value.toBytes();
+  }
+}
+
+export class ModuleExecuteCall__Outputs {
+  _call: ModuleExecuteCall;
+
+  constructor(call: ModuleExecuteCall) {
+    this._call = call;
+  }
+}
+
+export class ModuleMintCall extends ethereum.Call {
+  get inputs(): ModuleMintCall__Inputs {
+    return new ModuleMintCall__Inputs(this);
+  }
+
+  get outputs(): ModuleMintCall__Outputs {
+    return new ModuleMintCall__Outputs(this);
+  }
+}
+
+export class ModuleMintCall__Inputs {
+  _call: ModuleMintCall;
+
+  constructor(call: ModuleMintCall) {
+    this._call = call;
+  }
+
+  get to(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get value(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class ModuleMintCall__Outputs {
+  _call: ModuleMintCall;
+
+  constructor(call: ModuleMintCall) {
+    this._call = call;
+  }
+}
+
+export class ModuleTransferCall extends ethereum.Call {
+  get inputs(): ModuleTransferCall__Inputs {
+    return new ModuleTransferCall__Inputs(this);
+  }
+
+  get outputs(): ModuleTransferCall__Outputs {
+    return new ModuleTransferCall__Outputs(this);
+  }
+}
+
+export class ModuleTransferCall__Inputs {
+  _call: ModuleTransferCall;
+
+  constructor(call: ModuleTransferCall) {
+    this._call = call;
+  }
+
+  get from(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get to(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get value(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+}
+
+export class ModuleTransferCall__Outputs {
+  _call: ModuleTransferCall;
+
+  constructor(call: ModuleTransferCall) {
+    this._call = call;
+  }
+}
+
+export class ModuleTransferOwnershipCall extends ethereum.Call {
+  get inputs(): ModuleTransferOwnershipCall__Inputs {
+    return new ModuleTransferOwnershipCall__Inputs(this);
+  }
+
+  get outputs(): ModuleTransferOwnershipCall__Outputs {
+    return new ModuleTransferOwnershipCall__Outputs(this);
+  }
+}
+
+export class ModuleTransferOwnershipCall__Inputs {
+  _call: ModuleTransferOwnershipCall;
+
+  constructor(call: ModuleTransferOwnershipCall) {
+    this._call = call;
+  }
+
+  get to(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class ModuleTransferOwnershipCall__Outputs {
+  _call: ModuleTransferOwnershipCall;
+
+  constructor(call: ModuleTransferOwnershipCall) {
+    this._call = call;
+  }
+}
+
 export class RenounceOwnershipCall extends ethereum.Call {
   get inputs(): RenounceOwnershipCall__Inputs {
     return new RenounceOwnershipCall__Inputs(this);
@@ -671,6 +909,36 @@ export class RenounceOwnershipCall__Outputs {
   _call: RenounceOwnershipCall;
 
   constructor(call: RenounceOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class RetreiveCall extends ethereum.Call {
+  get inputs(): RetreiveCall__Inputs {
+    return new RetreiveCall__Inputs(this);
+  }
+
+  get outputs(): RetreiveCall__Outputs {
+    return new RetreiveCall__Outputs(this);
+  }
+}
+
+export class RetreiveCall__Inputs {
+  _call: RetreiveCall;
+
+  constructor(call: RetreiveCall) {
+    this._call = call;
+  }
+
+  get newOwner(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class RetreiveCall__Outputs {
+  _call: RetreiveCall;
+
+  constructor(call: RetreiveCall) {
     this._call = call;
   }
 }
@@ -781,340 +1049,6 @@ export class TransferOwnershipCall__Outputs {
   _call: TransferOwnershipCall;
 
   constructor(call: TransferOwnershipCall) {
-    this._call = call;
-  }
-}
-
-export class InitializeCall extends ethereum.Call {
-  get inputs(): InitializeCall__Inputs {
-    return new InitializeCall__Inputs(this);
-  }
-
-  get outputs(): InitializeCall__Outputs {
-    return new InitializeCall__Outputs(this);
-  }
-}
-
-export class InitializeCall__Inputs {
-  _call: InitializeCall;
-
-  constructor(call: InitializeCall) {
-    this._call = call;
-  }
-
-  get governance_(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get minter_(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
-  get name_(): string {
-    return this._call.inputValues[2].value.toString();
-  }
-
-  get symbol_(): string {
-    return this._call.inputValues[3].value.toString();
-  }
-}
-
-export class InitializeCall__Outputs {
-  _call: InitializeCall;
-
-  constructor(call: InitializeCall) {
-    this._call = call;
-  }
-}
-
-export class ExecuteCall extends ethereum.Call {
-  get inputs(): ExecuteCall__Inputs {
-    return new ExecuteCall__Inputs(this);
-  }
-
-  get outputs(): ExecuteCall__Outputs {
-    return new ExecuteCall__Outputs(this);
-  }
-}
-
-export class ExecuteCall__Inputs {
-  _call: ExecuteCall;
-
-  constructor(call: ExecuteCall) {
-    this._call = call;
-  }
-
-  get to(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get value(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get data(): Bytes {
-    return this._call.inputValues[2].value.toBytes();
-  }
-}
-
-export class ExecuteCall__Outputs {
-  _call: ExecuteCall;
-
-  constructor(call: ExecuteCall) {
-    this._call = call;
-  }
-}
-
-export class ModuleExecuteCall extends ethereum.Call {
-  get inputs(): ModuleExecuteCall__Inputs {
-    return new ModuleExecuteCall__Inputs(this);
-  }
-
-  get outputs(): ModuleExecuteCall__Outputs {
-    return new ModuleExecuteCall__Outputs(this);
-  }
-}
-
-export class ModuleExecuteCall__Inputs {
-  _call: ModuleExecuteCall;
-
-  constructor(call: ModuleExecuteCall) {
-    this._call = call;
-  }
-
-  get to(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get value(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get data(): Bytes {
-    return this._call.inputValues[2].value.toBytes();
-  }
-}
-
-export class ModuleExecuteCall__Outputs {
-  _call: ModuleExecuteCall;
-
-  constructor(call: ModuleExecuteCall) {
-    this._call = call;
-  }
-}
-
-export class ModuleExecuteReturnCall extends ethereum.Call {
-  get inputs(): ModuleExecuteReturnCall__Inputs {
-    return new ModuleExecuteReturnCall__Inputs(this);
-  }
-
-  get outputs(): ModuleExecuteReturnCall__Outputs {
-    return new ModuleExecuteReturnCall__Outputs(this);
-  }
-}
-
-export class ModuleExecuteReturnCall__Inputs {
-  _call: ModuleExecuteReturnCall;
-
-  constructor(call: ModuleExecuteReturnCall) {
-    this._call = call;
-  }
-
-  get to(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get value(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get data(): Bytes {
-    return this._call.inputValues[2].value.toBytes();
-  }
-}
-
-export class ModuleExecuteReturnCall__Outputs {
-  _call: ModuleExecuteReturnCall;
-
-  constructor(call: ModuleExecuteReturnCall) {
-    this._call = call;
-  }
-
-  get value0(): Bytes {
-    return this._call.outputValues[0].value.toBytes();
-  }
-}
-
-export class ModuleMintCall extends ethereum.Call {
-  get inputs(): ModuleMintCall__Inputs {
-    return new ModuleMintCall__Inputs(this);
-  }
-
-  get outputs(): ModuleMintCall__Outputs {
-    return new ModuleMintCall__Outputs(this);
-  }
-}
-
-export class ModuleMintCall__Inputs {
-  _call: ModuleMintCall;
-
-  constructor(call: ModuleMintCall) {
-    this._call = call;
-  }
-
-  get to(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get value(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-}
-
-export class ModuleMintCall__Outputs {
-  _call: ModuleMintCall;
-
-  constructor(call: ModuleMintCall) {
-    this._call = call;
-  }
-}
-
-export class ModuleBurnCall extends ethereum.Call {
-  get inputs(): ModuleBurnCall__Inputs {
-    return new ModuleBurnCall__Inputs(this);
-  }
-
-  get outputs(): ModuleBurnCall__Outputs {
-    return new ModuleBurnCall__Outputs(this);
-  }
-}
-
-export class ModuleBurnCall__Inputs {
-  _call: ModuleBurnCall;
-
-  constructor(call: ModuleBurnCall) {
-    this._call = call;
-  }
-
-  get from(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get value(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-}
-
-export class ModuleBurnCall__Outputs {
-  _call: ModuleBurnCall;
-
-  constructor(call: ModuleBurnCall) {
-    this._call = call;
-  }
-}
-
-export class ModuleTransferCall extends ethereum.Call {
-  get inputs(): ModuleTransferCall__Inputs {
-    return new ModuleTransferCall__Inputs(this);
-  }
-
-  get outputs(): ModuleTransferCall__Outputs {
-    return new ModuleTransferCall__Outputs(this);
-  }
-}
-
-export class ModuleTransferCall__Inputs {
-  _call: ModuleTransferCall;
-
-  constructor(call: ModuleTransferCall) {
-    this._call = call;
-  }
-
-  get from(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get to(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
-  get value(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-}
-
-export class ModuleTransferCall__Outputs {
-  _call: ModuleTransferCall;
-
-  constructor(call: ModuleTransferCall) {
-    this._call = call;
-  }
-}
-
-export class ModuleTransferOwnershipCall extends ethereum.Call {
-  get inputs(): ModuleTransferOwnershipCall__Inputs {
-    return new ModuleTransferOwnershipCall__Inputs(this);
-  }
-
-  get outputs(): ModuleTransferOwnershipCall__Outputs {
-    return new ModuleTransferOwnershipCall__Outputs(this);
-  }
-}
-
-export class ModuleTransferOwnershipCall__Inputs {
-  _call: ModuleTransferOwnershipCall;
-
-  constructor(call: ModuleTransferOwnershipCall) {
-    this._call = call;
-  }
-
-  get to(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class ModuleTransferOwnershipCall__Outputs {
-  _call: ModuleTransferOwnershipCall;
-
-  constructor(call: ModuleTransferOwnershipCall) {
-    this._call = call;
-  }
-}
-
-export class ModuleApproveCall extends ethereum.Call {
-  get inputs(): ModuleApproveCall__Inputs {
-    return new ModuleApproveCall__Inputs(this);
-  }
-
-  get outputs(): ModuleApproveCall__Outputs {
-    return new ModuleApproveCall__Outputs(this);
-  }
-}
-
-export class ModuleApproveCall__Inputs {
-  _call: ModuleApproveCall;
-
-  constructor(call: ModuleApproveCall) {
-    this._call = call;
-  }
-
-  get owner(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get spender(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
-  get value(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-}
-
-export class ModuleApproveCall__Outputs {
-  _call: ModuleApproveCall;
-
-  constructor(call: ModuleApproveCall) {
     this._call = call;
   }
 }

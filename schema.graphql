@@ -1,6 +1,10 @@
 type Wallet @entity {
   id: ID!
 	symbol: String!
+	name: String!
+	owner: String!
+	governance: String!
+	artistWallet: String!
 	nfts: [Nft!]! @derivedFrom(field: "wallet")
 }
 
