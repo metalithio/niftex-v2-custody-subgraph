@@ -6,9 +6,6 @@ dataSources:
     name: ShardedWalletFactory
     network: rinkeby
     source:
-      # rinkeby factory deployed by joel 20 Jan 2021
-      # address: '0x33DE11bBb8Cad9B47362A1213487A3DFeCd7D78E'
-      # !WARNING rinkeby factory with artist wallet deployed by joel 28 Jan 2021
       address: '0xfd07fc2CE2D40A15D3A2A90005CAFF2E8e9a35D4'
       abi: ShardedWalletFactory
       startBlock: 8048839
@@ -94,7 +91,6 @@ dataSources:
         - name: ERC1155
           file: ./abis/ERC1155.json
       eventHandlers:
-        # "indexed" count AND location matters
         - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
           handler: handleERC1155TransferSingle
         - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
