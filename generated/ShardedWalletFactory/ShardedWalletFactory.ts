@@ -33,44 +33,6 @@ export class ShardedWalletFactory extends ethereum.SmartContract {
     return new ShardedWalletFactory("ShardedWalletFactory", address);
   }
 
-  getWallet(id: BigInt): Address {
-    let result = super.call("getWallet", "getWallet(uint256):(address)", [
-      ethereum.Value.fromUnsignedBigInt(id)
-    ]);
-
-    return result[0].toAddress();
-  }
-
-  try_getWallet(id: BigInt): ethereum.CallResult<Address> {
-    let result = super.tryCall("getWallet", "getWallet(uint256):(address)", [
-      ethereum.Value.fromUnsignedBigInt(id)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  isWallet(wallet: Address): boolean {
-    let result = super.call("isWallet", "isWallet(address):(bool)", [
-      ethereum.Value.fromAddress(wallet)
-    ]);
-
-    return result[0].toBoolean();
-  }
-
-  try_isWallet(wallet: Address): ethereum.CallResult<boolean> {
-    let result = super.tryCall("isWallet", "isWallet(address):(bool)", [
-      ethereum.Value.fromAddress(wallet)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
-
   mintWallet(
     governance_: Address,
     owner_: Address,
@@ -116,21 +78,6 @@ export class ShardedWalletFactory extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  walletCount(): BigInt {
-    let result = super.call("walletCount", "walletCount():(uint256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_walletCount(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("walletCount", "walletCount():(uint256)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 }
 

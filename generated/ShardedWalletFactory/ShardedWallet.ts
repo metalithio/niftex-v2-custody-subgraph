@@ -36,6 +36,28 @@ export class Approval__Params {
   }
 }
 
+export class ArtistUpdated extends ethereum.Event {
+  get params(): ArtistUpdated__Params {
+    return new ArtistUpdated__Params(this);
+  }
+}
+
+export class ArtistUpdated__Params {
+  _event: ArtistUpdated;
+
+  constructor(event: ArtistUpdated) {
+    this._event = event;
+  }
+
+  get oldArtist(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get newArtist(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
 export class Execute extends ethereum.Event {
   get params(): Execute__Params {
     return new Execute__Params(this);
@@ -59,6 +81,28 @@ export class Execute__Params {
 
   get data(): Bytes {
     return this._event.parameters[2].value.toBytes();
+  }
+}
+
+export class GovernanceUpdated extends ethereum.Event {
+  get params(): GovernanceUpdated__Params {
+    return new GovernanceUpdated__Params(this);
+  }
+}
+
+export class GovernanceUpdated__Params {
+  _event: GovernanceUpdated;
+
+  constructor(event: GovernanceUpdated) {
+    this._event = event;
+  }
+
+  get oldGovernance(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get newGovernance(): Address {
+    return this._event.parameters[1].value.toAddress();
   }
 }
 
@@ -169,6 +213,29 @@ export class Transfer__Params {
 export class ShardedWallet extends ethereum.SmartContract {
   static bind(address: Address): ShardedWallet {
     return new ShardedWallet("ShardedWallet", address);
+  }
+
+  ALLOW_GOVERNANCE_UPGRADE(): Bytes {
+    let result = super.call(
+      "ALLOW_GOVERNANCE_UPGRADE",
+      "ALLOW_GOVERNANCE_UPGRADE():(bytes32)",
+      []
+    );
+
+    return result[0].toBytes();
+  }
+
+  try_ALLOW_GOVERNANCE_UPGRADE(): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "ALLOW_GOVERNANCE_UPGRADE",
+      "ALLOW_GOVERNANCE_UPGRADE():(bytes32)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
   allowance(owner: Address, spender: Address): BigInt {
@@ -553,6 +620,70 @@ export class ApproveCall__Outputs {
   }
 }
 
+export class BurnCall extends ethereum.Call {
+  get inputs(): BurnCall__Inputs {
+    return new BurnCall__Inputs(this);
+  }
+
+  get outputs(): BurnCall__Outputs {
+    return new BurnCall__Outputs(this);
+  }
+}
+
+export class BurnCall__Inputs {
+  _call: BurnCall;
+
+  constructor(call: BurnCall) {
+    this._call = call;
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class BurnCall__Outputs {
+  _call: BurnCall;
+
+  constructor(call: BurnCall) {
+    this._call = call;
+  }
+}
+
+export class BurnFromCall extends ethereum.Call {
+  get inputs(): BurnFromCall__Inputs {
+    return new BurnFromCall__Inputs(this);
+  }
+
+  get outputs(): BurnFromCall__Outputs {
+    return new BurnFromCall__Outputs(this);
+  }
+}
+
+export class BurnFromCall__Inputs {
+  _call: BurnFromCall;
+
+  constructor(call: BurnFromCall) {
+    this._call = call;
+  }
+
+  get account(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class BurnFromCall__Outputs {
+  _call: BurnFromCall;
+
+  constructor(call: BurnFromCall) {
+    this._call = call;
+  }
+}
+
 export class DecreaseAllowanceCall extends ethereum.Call {
   get inputs(): DecreaseAllowanceCall__Inputs {
     return new DecreaseAllowanceCall__Inputs(this);
@@ -913,20 +1044,20 @@ export class RenounceOwnershipCall__Outputs {
   }
 }
 
-export class RetreiveCall extends ethereum.Call {
-  get inputs(): RetreiveCall__Inputs {
-    return new RetreiveCall__Inputs(this);
+export class RetrieveCall extends ethereum.Call {
+  get inputs(): RetrieveCall__Inputs {
+    return new RetrieveCall__Inputs(this);
   }
 
-  get outputs(): RetreiveCall__Outputs {
-    return new RetreiveCall__Outputs(this);
+  get outputs(): RetrieveCall__Outputs {
+    return new RetrieveCall__Outputs(this);
   }
 }
 
-export class RetreiveCall__Inputs {
-  _call: RetreiveCall;
+export class RetrieveCall__Inputs {
+  _call: RetrieveCall;
 
-  constructor(call: RetreiveCall) {
+  constructor(call: RetrieveCall) {
     this._call = call;
   }
 
@@ -935,10 +1066,10 @@ export class RetreiveCall__Inputs {
   }
 }
 
-export class RetreiveCall__Outputs {
-  _call: RetreiveCall;
+export class RetrieveCall__Outputs {
+  _call: RetrieveCall;
 
-  constructor(call: RetreiveCall) {
+  constructor(call: RetrieveCall) {
     this._call = call;
   }
 }
@@ -1049,6 +1180,66 @@ export class TransferOwnershipCall__Outputs {
   _call: TransferOwnershipCall;
 
   constructor(call: TransferOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class UpdateArtistWalletCall extends ethereum.Call {
+  get inputs(): UpdateArtistWalletCall__Inputs {
+    return new UpdateArtistWalletCall__Inputs(this);
+  }
+
+  get outputs(): UpdateArtistWalletCall__Outputs {
+    return new UpdateArtistWalletCall__Outputs(this);
+  }
+}
+
+export class UpdateArtistWalletCall__Inputs {
+  _call: UpdateArtistWalletCall;
+
+  constructor(call: UpdateArtistWalletCall) {
+    this._call = call;
+  }
+
+  get newArtistWallet(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class UpdateArtistWalletCall__Outputs {
+  _call: UpdateArtistWalletCall;
+
+  constructor(call: UpdateArtistWalletCall) {
+    this._call = call;
+  }
+}
+
+export class UpdateGovernanceCall extends ethereum.Call {
+  get inputs(): UpdateGovernanceCall__Inputs {
+    return new UpdateGovernanceCall__Inputs(this);
+  }
+
+  get outputs(): UpdateGovernanceCall__Outputs {
+    return new UpdateGovernanceCall__Outputs(this);
+  }
+}
+
+export class UpdateGovernanceCall__Inputs {
+  _call: UpdateGovernanceCall;
+
+  constructor(call: UpdateGovernanceCall) {
+    this._call = call;
+  }
+
+  get newGovernance(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class UpdateGovernanceCall__Outputs {
+  _call: UpdateGovernanceCall;
+
+  constructor(call: UpdateGovernanceCall) {
     this._call = call;
   }
 }
