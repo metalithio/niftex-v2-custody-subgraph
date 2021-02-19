@@ -10,17 +10,27 @@ import {
 } from "../../generated/schema"
 
 export function handlePunkTransfer(event: PunkTransfer): void {
-	let wallet = Wallet.load(event.params.to.toHex())
+	let walletTo = Wallet.load(event.params.to.toHex())
+	let walletFrom = Wallet.load(event.params.from.toHex())
 
-	if (wallet !== null) {
-		let id = event.address.toHexString() + '_' + event.params.punkIndex.toString()
+	let id = event.address.toHexString() + '_' + event.params.punkIndex.toString()
+
+	// entering wallet
+	if (walletTo !== null) {
 		let entity = new Nft(id)
-		entity.wallet = wallet.id
+		entity.wallet = walletTo.id
 		entity.registry = event.address.toHexString()
 		entity.tokenId = event.params.punkIndex
 		entity.txnHash = event.transaction.hash
 		entity.name = "CRYPTOPUNKS"
 		entity.symbol = "Ͼ"
+		entity.save()
+	}
+
+	// leaving wallet
+	if (walletFrom != null) {
+		let entity = Nft.load(id)
+		entity.wallet = "0x0000000000000000000000000000000000000000"
 		entity.save()
 	}
 }

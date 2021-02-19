@@ -17,12 +17,14 @@ import {
 
 export function handleERC1155TransferSingle(event: TransferSingle): void {
 
-	let wallet = Wallet.load(event.params.to.toHex())
+	let walletTo = Wallet.load(event.params.to.toHex())
+	let walletFrom = Wallet.load(event.params.from.toHex())
 
-	if (wallet !== null) {
-		let id = event.address.toHexString() + '_' + event.params.id.toString()
+	let id = event.address.toHexString() + '_' + event.params.id.toString()
+
+	if (walletTo !== null) {
 		let entity = new Nft(id)
-		entity.wallet = wallet.id
+		entity.wallet = walletTo.id
 		entity.registry = event.address.toHexString()
 		entity.tokenId = event.params.id
 		entity.txnHash = event.transaction.hash
@@ -36,13 +38,21 @@ export function handleERC1155TransferSingle(event: TransferSingle): void {
 
 		entity.save()
 	}
+
+	// leaving wallet
+	if (walletFrom != null) {
+		let entity = Nft.load(id)
+		entity.wallet = "0x0000000000000000000000000000000000000000"
+		entity.save()
+	}
 }
 
 export function handleERC1155TransferBatch(event: TransferBatch): void {
 
-	let wallet = Wallet.load(event.params.to.toHex())
+	let walletTo = Wallet.load(event.params.to.toHex())
+	let walletFrom = Wallet.load(event.params.from.toHex())
 
-	if (wallet !== null) {
+	if (walletTo !== null) {
 		let idsArray = event.params.ids
 		let valuesArray = event.params.values
 		let registry = ERC1155.bind(event.address as Address)
@@ -50,7 +60,7 @@ export function handleERC1155TransferBatch(event: TransferBatch): void {
 		for (let i: i32 = 0; i < idsArray.length; i++) {
 			let id = event.address.toHexString() + '_' + idsArray[i].toString()
 			let entity = new Nft(id)
-			entity.wallet = wallet.id
+			entity.wallet = walletTo.id
 			entity.registry = event.address.toHexString()
 			entity.tokenId = idsArray[i]
 			entity.txnHash = event.transaction.hash
@@ -61,6 +71,17 @@ export function handleERC1155TransferBatch(event: TransferBatch): void {
 				entity.uri = uriResult.value
 			}
 
+			entity.save()
+		}
+	}
+
+	// leaving wallet
+	if (walletFrom != null) {
+		let idsArray = event.params.ids
+		for (let i: i32 = 0; i < idsArray.length; i++) {
+			let id = event.address.toHexString() + '_' + idsArray[i].toString()
+			let entity = Nft.load(id)
+			entity.wallet = "0x0000000000000000000000000000000000000000"
 			entity.save()
 		}
 	}
