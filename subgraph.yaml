@@ -6,7 +6,7 @@ dataSources:
     name: ShardedWalletFactory
     network: rinkeby
     source:
-      address: '0xfd07fc2CE2D40A15D3A2A90005CAFF2E8e9a35D4'
+      address: '0xE65D49a4a44cb07699520b2Ad52DBb1E0F28c2E6'
       abi: ShardedWalletFactory
       startBlock: 8048839
     mapping:
