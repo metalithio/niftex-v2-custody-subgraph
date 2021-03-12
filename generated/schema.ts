@@ -95,6 +95,15 @@ export class Wallet extends Entity {
   set nfts(value: Array<string>) {
     this.set("nfts", Value.fromStringArray(value));
   }
+
+  get oldNfts(): Array<string> {
+    let value = this.get("oldNfts");
+    return value.toStringArray();
+  }
+
+  set oldNfts(value: Array<string>) {
+    this.set("oldNfts", Value.fromStringArray(value));
+  }
 }
 
 export class Nft extends Entity {
@@ -134,6 +143,23 @@ export class Nft extends Entity {
 
   set wallet(value: string) {
     this.set("wallet", Value.fromString(value));
+  }
+
+  get oldWallet(): string | null {
+    let value = this.get("oldWallet");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set oldWallet(value: string | null) {
+    if (value === null) {
+      this.unset("oldWallet");
+    } else {
+      this.set("oldWallet", Value.fromString(value as string));
+    }
   }
 
   get registry(): string {

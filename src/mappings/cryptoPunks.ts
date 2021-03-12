@@ -30,6 +30,7 @@ export function handlePunkTransfer(event: PunkTransfer): void {
 	// leaving wallet
 	if (walletFrom != null) {
 		let entity = Nft.load(id)
+		entity.oldWallet = entity.wallet
 		entity.wallet = "0x0000000000000000000000000000000000000000"
 		entity.save()
 	}

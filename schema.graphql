@@ -6,11 +6,13 @@ type Wallet @entity {
 	governance: String!
 	artistWallet: String!
 	nfts: [Nft!]! @derivedFrom(field: "wallet")
+	oldNfts: [Nft!]! @derivedFrom(field: "oldWallet")
 }
 
 type Nft @entity {
 	id: ID!
 	wallet: Wallet!
+	oldWallet: Wallet
 	registry: String!
 	tokenId: BigInt!
 	txnHash: Bytes!

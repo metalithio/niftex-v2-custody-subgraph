@@ -42,6 +42,7 @@ export function handleERC1155TransferSingle(event: TransferSingle): void {
 	// leaving wallet
 	if (walletFrom != null) {
 		let entity = Nft.load(id)
+		entity.oldWallet = entity.wallet
 		entity.wallet = "0x0000000000000000000000000000000000000000"
 		entity.save()
 	}
@@ -81,6 +82,7 @@ export function handleERC1155TransferBatch(event: TransferBatch): void {
 		for (let i: i32 = 0; i < idsArray.length; i++) {
 			let id = event.address.toHexString() + '_' + idsArray[i].toString()
 			let entity = Nft.load(id)
+			entity.oldWallet = entity.wallet
 			entity.wallet = "0x0000000000000000000000000000000000000000"
 			entity.save()
 		}
