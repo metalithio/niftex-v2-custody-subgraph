@@ -24,6 +24,7 @@ export function handlePunkTransfer(event: PunkTransfer): void {
 		entity.txnHash = event.transaction.hash
 		entity.name = "CRYPTOPUNKS"
 		entity.symbol = "Ͼ"
+		entity.decimals = 13370455
 		entity.save()
 	}
 

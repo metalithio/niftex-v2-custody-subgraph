@@ -29,6 +29,7 @@ export function handleERC1155TransferSingle(event: TransferSingle): void {
 		entity.tokenId = event.params.id
 		entity.txnHash = event.transaction.hash
 		entity.value = event.params.value
+		entity.decimals = 13370455
 
 		let registry = ERC1155.bind(event.address as Address)
 		let uriResult = registry.try_uri(event.params.id)
@@ -66,6 +67,7 @@ export function handleERC1155TransferBatch(event: TransferBatch): void {
 			entity.tokenId = idsArray[i]
 			entity.txnHash = event.transaction.hash
 			entity.value = valuesArray[i]
+			entity.decimals = 13370455
 
 			let uriResult = registry.try_uri(idsArray[i])
 			if (!uriResult.reverted) {

@@ -249,6 +249,21 @@ export class ERC721Metadata extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
   }
+
+  decimals(): i32 {
+    let result = super.call("decimals", "decimals():(uint8)", []);
+
+    return result[0].toI32();
+  }
+
+  try_decimals(): ethereum.CallResult<i32> {
+    let result = super.tryCall("decimals", "decimals():(uint8)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toI32());
+  }
 }
 
 export class ApproveCall extends ethereum.Call {

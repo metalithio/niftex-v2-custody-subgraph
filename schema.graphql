@@ -20,6 +20,7 @@ type Nft @entity {
 	name: String
 	symbol: String
 	uri: String
+	decimals: Int!
 	"Only used for ERC1155"
 	value: BigInt
 }
