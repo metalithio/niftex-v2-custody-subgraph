@@ -1,0 +1,99 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ShardedWalletFactory
+    network: mainnet
+    source:
+      # !NOTE configurable
+      address: '0xE65D49a4a44cb07699520b2Ad52DBb1E0F28c2E6'
+      abi: ShardedWalletFactory
+      startBlock: 12105295
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/shardedWalletFactory.ts
+      entities:
+        - NewInstance
+      abis:
+        - name: ShardedWalletFactory
+          file: ./abis/ShardedWalletFactory.json
+        - name: ShardedWallet
+          file: ./abis/ShardedWallet.json
+      eventHandlers:
+        - event: NewInstance(address)
+          handler: handleNewInstance
+  # NFT REGISTRIES
+  - kind: ethereum/contract
+    name: CryptoPunks
+    network: mainnet
+    source:
+      # !NOTE configurable
+      address: "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"
+      abi: CryptoPunks
+      startBlock: 12105295
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - PunkTransfer
+      abis:
+        - name: CryptoPunks
+          file: ./abis/CryptoPunks.json
+      eventHandlers:
+        - event: PunkTransfer(indexed address,indexed address,uint256)
+          handler: handlePunkTransfer
+      file: ./src/mappings/cryptoPunks.ts
+  - kind: ethereum/contract
+    name: GenericTransfers
+    network: mainnet
+    source:
+      abi: TransferPermutations
+      startBlock: 12105295
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: TransferPermutations
+          file: ./abis/TransferPermutations.json
+        - name: ERC721Metadata
+          file: ./abis/ERC721Metadata.json
+      eventHandlers:
+        # "indexed" count AND location matters
+        - event: Transfer(address,address,uint256)
+          handler: handleTransfer
+        - event: Transfer(address,address,indexed uint256)
+          handler: handleTransfer
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mappings/genericTransfers.ts
+  - kind: ethereum/contract
+    name: ERC1155
+    network: mainnet
+    source:
+      abi: ERC1155
+      startBlock: 12105295
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - TransferSingle
+        - TransferBatch
+      abis:
+        - name: ERC1155
+          file: ./abis/ERC1155.json
+      eventHandlers:
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleERC1155TransferSingle
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleERC1155TransferBatch
+      file: ./src/mappings/erc1155Transfers.ts

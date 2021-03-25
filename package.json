@@ -4,8 +4,9 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ jmahhh/niftex-v2-custody",
-    "create-local": "graph create --node http://localhost:8020/ jmahhh/niftex-v2-custody",
+    "deploy:rinkeby": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ jmahhh/niftex-v2-custody subgraph.rinkeby.yaml",
+		"deploy:mainnet": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ jmahhh/niftex-v2-custody-mainnet subgraph.mainnet.yaml",
+		"create-local": "graph create --node http://localhost:8020/ jmahhh/niftex-v2-custody",
     "remove-local": "graph remove --node http://localhost:8020/ jmahhh/niftex-v2-custody",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 jmahhh/niftex-v2-custody"
   },
