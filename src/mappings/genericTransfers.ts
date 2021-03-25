@@ -49,10 +49,8 @@ export function handleTransfer(event: Transfer): void {
 
 		let decimalsResult = registry.try_decimals()
 		if (decimalsResult.reverted) {
-			log.warning("try_symbol reverted", [])
 			entity.decimals = 13370455
 		} else {
-			log.warning("try_decimals: {}", [BigInt.fromI32(decimalsResult.value).toString()])
 			entity.decimals = decimalsResult.value
 		}
 
