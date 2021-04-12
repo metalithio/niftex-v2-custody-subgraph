@@ -11,7 +11,7 @@ type Wallet @entity {
 
 type Nft @entity {
 	id: ID!
-	wallet: Wallet!
+	wallet: Wallet
 	oldWallet: Wallet
 	registry: String!
 	tokenId: BigInt!

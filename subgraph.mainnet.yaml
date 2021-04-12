@@ -7,9 +7,9 @@ dataSources:
     network: mainnet
     source:
       # !NOTE configurable
-      address: '0xE65D49a4a44cb07699520b2Ad52DBb1E0F28c2E6'
+      address: '0x7e5c48817989c3Bb0ddf4565fd670193A7cC157C'
       abi: ShardedWalletFactory
-      startBlock: 12105295
+      startBlock: 12133104
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -33,7 +33,7 @@ dataSources:
       # !NOTE configurable
       address: "0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB"
       abi: CryptoPunks
-      startBlock: 12105295
+      startBlock: 12133104
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -52,7 +52,7 @@ dataSources:
     network: mainnet
     source:
       abi: TransferPermutations
-      startBlock: 12105295
+      startBlock: 12133104
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -80,7 +80,7 @@ dataSources:
     network: mainnet
     source:
       abi: ERC1155
-      startBlock: 12105295
+      startBlock: 12133104
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

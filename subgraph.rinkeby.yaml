@@ -6,9 +6,10 @@ dataSources:
     name: ShardedWalletFactory
     network: rinkeby
     source:
-      address: '0xE65D49a4a44cb07699520b2Ad52DBb1E0F28c2E6'
+      # !NOTE configurable
+      address: '0x8D6889c94DeE6BFF422EF191Fa404f461667D2c4'
       abi: ShardedWalletFactory
-      startBlock: 8162519
+      startBlock: 8294352
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -32,7 +33,7 @@ dataSources:
       # !WARNING punk rinkeby deployed by ourselves for niftex v1
       address: "0xee321008dd7f9267cd5ea611da40d2d83e5fa15f"
       abi: CryptoPunks
-      startBlock: 8162519
+      startBlock: 8294352
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -51,7 +52,7 @@ dataSources:
     network: rinkeby
     source:
       abi: TransferPermutations
-      startBlock: 8162519
+      startBlock: 8294352
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -79,7 +80,7 @@ dataSources:
     network: rinkeby
     source:
       abi: ERC1155
-      startBlock: 8162519
+      startBlock: 8294352
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
