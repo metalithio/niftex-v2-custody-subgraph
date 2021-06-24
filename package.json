@@ -1,6 +1,6 @@
 {
   "name": "niftex-v2-custody",
-  "license": "UNLICENSED",
+	"license": "MIT",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
